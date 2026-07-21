@@ -20,7 +20,9 @@
 # -----------------------------------------------------------------------
 
 import numpy as np
-import datapie as dp
+import irispie as ir
+
+ir.min_version_required("0.7.0")
 
 
 # -----------------------------------------------------------------------
@@ -29,22 +31,22 @@ import datapie as dp
 #
 # Simulate a random-walk central path with linearly widening uncertainty.
 
-_SPAN = dp.qq(2020, 1) >> dp.qq(2024, 4)
+_SPAN = ir.qq(2020, 1) >> ir.qq(2024, 4)
 _NUM_PERIODS = len(tuple(_SPAN))
 
 np.random.seed(0)
 
-_midline = dp.Series(
+_midline = ir.Series(
     periods=_SPAN,
     values=np.cumsum(np.random.normal(0, 0.3, _NUM_PERIODS)),
 )
 
-_inner = dp.Series(
+_inner = ir.Series(
     periods=_SPAN,
     values=np.linspace(0.1, 1.0, _NUM_PERIODS),
 )
 
-_outer = dp.Series(
+_outer = ir.Series(
     periods=_SPAN,
     values=np.linspace(0.2, 2.5, _NUM_PERIODS),
 )
@@ -126,7 +128,7 @@ bands5.plot_bands(
 # Fan chart in a subplot grid
 # -----------------------------------------------------------------------
 
-fig = dp.make_subplots(
+fig = ir.make_subplots(
     (1, 2),
     subplot_titles=["Two bands", "One band"],
 )
